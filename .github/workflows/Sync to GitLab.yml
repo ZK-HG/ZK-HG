@@ -25,3 +25,10 @@ jobs:
           
           # 取得 GitLab 最新的 main 分支
           git fetch gitlab main || g
+          
+          # 確保與遠端同步，避免衝突
+          git reset --hard origin/main
+          git merge --ff-only gitlab/main || git rebase gitlab/main || echo "No need to merge"
+
+          # 推送最新變更
+          git push gitlab main
