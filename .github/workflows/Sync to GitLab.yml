@@ -14,22 +14,21 @@ jobs:
 
       - name: Push to GitLab
         env:
-          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}  # 從 Secrets 讀取 Token
-          GITLAB_GROUP: ${{ vars.GITLAB_GROUP }}      # 從 Variables 讀取 Group 名稱
-          GITLAB_REPO: ${{ vars.GITLAB_REPO }}        # 從 Variables 讀取 Repo 名稱
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}  # 从 Secrets 读取 Token
+          GITLAB_GROUP: ${{ vars.GITLAB_GROUP }}      # 从 Variables 读取 Group 名称
+          GITLAB_REPO: ${{ vars.GITLAB_REPO }}        # 从 Variables 读取 Repo 名称
         run: |
           GITLAB_URL="https://oauth2:${GITLAB_TOKEN}@gitlab.com/${GITLAB_GROUP}/${GITLAB_REPO}.git"
           
-          # 設定 GitLab remote（如果已存在則更新）
+          # 设置 GitLab remote（如果已存在则更新）
           git remote add gitlab $GITLAB_URL || git remote set-url gitlab $GITLAB_URL
           
-          # 取得 GitLab 最新的 main 分支
-          git fetch gitlab main || g
+          # 获取 GitLab 最新的 main 分支
+          git fetch gitlab main
           
-          # 確保與遠端同步，避免衝突
+          # 确保与远程同步，避免冲突
           git reset --hard origin/main
           git merge --ff-only gitlab/main || git rebase gitlab/main || echo "No need to merge"
 
-          # 推送最新變更
-          git push --force gitlab main
-
+          # 推送最新变更到 GitLab
+          git push gitlab main
