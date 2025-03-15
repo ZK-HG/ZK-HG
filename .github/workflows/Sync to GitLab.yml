@@ -31,4 +31,5 @@ jobs:
           git merge --ff-only gitlab/main || git rebase gitlab/main || echo "No need to merge"
 
           # 推送最新變更
-          git push gitlab main
+          git push --force gitlab main
+
