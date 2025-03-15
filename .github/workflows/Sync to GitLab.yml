@@ -28,7 +28,12 @@ jobs:
           
           # 确保与远程同步，避免冲突
           git reset --hard origin/main
-          git merge --ff-only gitlab/main || git rebase gitlab/main || echo "No need to merge"
+          
+          # 拉取远程的更改并解决冲突
+          git pull --allow-unrelated-histories gitlab main
 
-          # 推送最新变更到 GitLab
-          git push gitlab main
+          # 如果有冲突需要解决，手动解决冲突后再继续
+          git add .github/workflows/Sync\ to\ GitLab.yml README.md
+          git rebase --continue || echo "No need to rebase"
+
+          # 推送最新变更到 Git
