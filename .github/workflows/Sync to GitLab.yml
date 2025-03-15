@@ -13,8 +13,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Push to GitLab
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}  # 從 Secrets 讀取 Token
+          GITLAB_GROUP: ${{ vars.GITLAB_GROUP }}      # 從 Variables 讀取 Group 名稱
+          GITLAB_REPO: ${{ vars.GITLAB_REPO }}        # 從 Variables 讀取 Repo 名稱
         run: |
-          GITLAB_URL="https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/${{ vars.GITLAB_GROUP }}/${{ vars.GITLAB_REPO }}.git"
-          git remote add gitlab $GITLAB_URL
-          git fetch gitlab main git merge --no-edit gitlab/main || git rebase gitlab/main
-          git push gitlab main
+          GITLAB_URL="https://oauth2:${GITLAB_TOKEN}@gitlab.com/${GITLAB_GROUP}/${GITLAB_REPO}.git"
+          
+          # 設定 GitLab remote（如果已存在則更新）
+          git remote add gitlab $GITLAB_URL || git remote set-url gitlab $GITLAB_URL
+          
+          # 取得 GitLab 最新的 main 分支
+          git fetch gitlab main || g
