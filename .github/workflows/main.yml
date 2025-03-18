@@ -15,9 +15,14 @@ jobs:
       - name: Set up GitLab repository
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}  # 从 Secrets 获取 GitLab Token
-          GITLAB_GROUP: ${{ vars.GITLAB_GROUP }}    # 从环境变量获取 GitLab Group
-          GITLAB_REPO: ${{ vars.GITLAB_REPO }}      # 从环境变量获取 GitLab Repo
         run: |
+          GITLAB_GROUP="${{ github.repository_owner }}"
+          GITLAB_REPO="${{ github.event.repository.name }}"
+          
+          echo "GitLab Group=${GITLAB_GROUP}"
+          echo "GitLab Repository=${GITLAB_REPO}"
+          echo "GitLab Token=${GITLAB_TOKEN}"
+          
           # 获取当前 GitHub 分支名
           GITHUB_BRANCH=$(echo ${GITHUB_REF} | sed 's/refs\/heads\///')
 
