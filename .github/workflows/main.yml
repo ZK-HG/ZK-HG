@@ -1,4 +1,4 @@
-name: Sync GitHub to GitLab
+name: sync GitHub to GitLab
 
 on:
   push:
@@ -9,10 +9,10 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout GitHub repository
+      - name: checkout GitHub repository
         uses: actions/checkout@v3
 
-      - name: Set up GitLab repository
+      - name: set up GitLab repository
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}  # 从 Secrets 获取 GitLab Token
         run: |
