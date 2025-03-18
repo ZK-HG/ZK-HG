@@ -15,9 +15,12 @@ jobs:
       - name: Push to GitLab
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}  # 从 Secrets 读取 Token
-          GITLAB_GROUP: ${{ vars.GITLAB_GROUP }}      # 从 Variables 读取 Group 名称
-          GITLAB_REPO: ${{ vars.GITLAB_REPO }}        # 从 Variables 读取 Repo 名称
         run: |
+          GITLAB_GROUP="${{ github.repository_owner }}"
+          GITLAB_REPO="${{ github.event.repository.name }}"
+          echo "GitLab Group=${GITLAB_GROUP}"
+          echo "GitLab Repository=${GITLAB_REPO}"
+          echo "GitLab Token=${GITLAB_TOKEN}"
           GITLAB_URL="https://oauth2:${GITLAB_TOKEN}@gitlab.com/${GITLAB_GROUP}/${GITLAB_REPO}.git"
           
           # 设置 GitLab remote（如果已存在则更新）
