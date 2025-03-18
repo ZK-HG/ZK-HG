@@ -10,7 +10,7 @@ sync_to_github:
     - echo "sync GitLab to GitHub"
     - echo "Current Group=${CI_PROJECT_NAMESPACE}"
     - echo "Current Repository=${CI_PROJECT_NAME}"
-    - echo "GitHub Token={${GITHUB_TOKEN}}"
+    - echo "GitHub Token={$GITHUB_TOKEN}"
     
     # 設定 GitHub Token 和 遠端倉庫 URL
     - export GITHUB_URL="https://${GITHUB_TOKEN}@github.com/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git"
