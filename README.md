@@ -5,7 +5,7 @@
  👯 I’m looking to collaborate on ...<br> 
  🤔 I’m looking for help with ...<br> 
  💬 Ask me about ...<br> 
- 📫 How to reach me: ...<br> 
+ 📫 How to reach me: ...a58589961221@gmail.com
  😄 Pronouns: ...<br> 
  ⚡ Fun fact: ...
 
